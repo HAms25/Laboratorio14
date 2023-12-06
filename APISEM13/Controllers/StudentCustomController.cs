@@ -1,5 +1,6 @@
 ﻿using APISEM13.Models;
 using APISEM13.Models.Request;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace APISEM13.Controllers
         }
 
         // GET: api/student
+        [Authorize("Vendedor")]
         [HttpGet(Name = "GetCustomStudents")]
         public List<Student> GetCustomStudents()
         {
@@ -26,6 +28,7 @@ namespace APISEM13.Controllers
 
         }
 
+        
         // GET: api/student
         [HttpGet(Name ="GetByFilters")]
         public List<Student> GetByFilters(string firstName, string lastName, string email)
@@ -40,6 +43,7 @@ namespace APISEM13.Controllers
             return response;
         }
 
+        
         [HttpGet(Name = "GetWithGrade")]
         public List<Student> GetWithGrade(string firstName, string grade)
         {
@@ -62,6 +66,7 @@ namespace APISEM13.Controllers
            return response;
         }
 
+        
         // 1
         [HttpPost(Name = "InsertCourse")]
         public void InsertCourse(Course course)
@@ -81,6 +86,7 @@ namespace APISEM13.Controllers
             _context.SaveChanges();
         }
 
+        
         // 3
         [HttpPost(Name = "InsertGrade")]
         public void InsertGrade(Grade grade)
@@ -100,6 +106,7 @@ namespace APISEM13.Controllers
             _context.SaveChanges();
         }
 
+        
         // 5
         [HttpPost(Name = "InsertStudent")]
         public void InsertStudent(Student student)
@@ -168,6 +175,8 @@ namespace APISEM13.Controllers
             _context.SaveChanges();
         }
 
+        //Ejemplo 3
+        [Authorize(Roles = "Vendedor")]
         // 10
         [HttpPost(Name = "InsertEnrollment")]
         public void InsertEnrollment(StudentRequestV5 request)
